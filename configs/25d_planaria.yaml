@@ -1,0 +1,55 @@
+experiment:
+  name: "hybrid_nafnet_mamba_25d_planaria"
+  seed: 42
+  device: "cuda"
+
+dataset:
+  name: "Planaria"
+  type: "2.5d"
+  noisy_dir_small: "./data/planaria_2d/noisy/small/"
+  clean_dir_small: "./data/planaria_2d/gt/small/"
+  noisy_dir_large: "./data/planaria_2d/noisy/large/"
+  clean_dir_large: "./data/planaria_2d/gt/large/"
+  window_size: 5
+  crop_size: 256
+  min_patch_std: 0.005
+  percentile_lower: 0.1
+  percentile_upper: 99.9
+
+model:
+  name: "CustomSOTAHybrid"
+  in_channels: 5
+  out_channels: 1
+  base_dim: 32
+  crop_size: 256
+  use_mamba: true
+  output_mode: "clean"
+
+loss:
+  eps: 0.001
+  charbonnier_weight: 0.70
+  mse_weight: 0.25
+  edge_weight: 0.01
+
+training:
+  n_folds: 3
+  epochs: 100
+  steps_per_epoch: 400
+  batch_size: 4
+  num_workers: 0
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  scheduler_eta_min: 0.000001
+  grad_clip_max_norm: 1.0
+  use_amp: false
+  validate_every: 5
+  max_val_samples_fast: 250
+  max_val_samples_full: 2000
+  save_dir: "./checkpoints/25d_planaria/"
+
+evaluation:
+  pad_multiple: 16
+  data_range: 1.0
+  use_sipsnr: true
+  fast_tta_mode: "x4"
+  final_tta_mode: "x8"

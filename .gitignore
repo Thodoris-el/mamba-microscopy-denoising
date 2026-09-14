@@ -1,0 +1,35 @@
+# Bytecode and runtime artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.ipynb_checkpoints/
+
+# Virtual environments
+env/
+venv/
+.venv/
+conda-env/
+
+# Datasets & raw images
+data/
+*.tif
+*.tiff
+*.zip
+*.tar.gz
+planaria_2d/
+tribolium_2d/
+
+# Saved models and checkpoints
+checkpoints/
+*.pth
+*.pt
+
+# Outputs, figures, and plots
+outputs/
+*.png
+*.pdf
+
+# IDE and system
+.DS_Store
+.vscode/
+.idea/
